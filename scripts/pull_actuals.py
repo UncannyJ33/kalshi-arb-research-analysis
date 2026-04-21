@@ -46,9 +46,9 @@ def main():
             logger.error(f"{city_cfg['name']}: pull failed")
             continue
 
-        data["_meta"] = {"city_id": city_id}
+        out = {**data, "_meta": {"city_id": city_id}}
         with open(cache_path, "w") as f:
-            json.dump(data, f)
+            json.dump(out, f)
         logger.info(f"{city_cfg['name']}: {len(data['daily']['time'])} days")
 
     logger.info("Actuals pull complete.")
