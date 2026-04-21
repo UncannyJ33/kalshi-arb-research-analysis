@@ -18,14 +18,10 @@ import logging
 from pathlib import Path
 from datetime import datetime
 
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
 import seaborn as sns
-
-sys.path.insert(0, str(Path(__file__).parent))
-from ev import taker_fee
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
 logger = logging.getLogger(__name__)
