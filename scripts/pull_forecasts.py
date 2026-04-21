@@ -13,7 +13,7 @@ import sys
 import json
 import logging
 import time
-from datetime import datetime, timezone, timedelta
+from datetime import date, datetime, timezone, timedelta
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -38,7 +38,6 @@ def dates_in_window(lookback_days: int = 60) -> list[str]:
 
 def mos_runtime_for_date(weather_date_str: str) -> str:
     """Return the 12Z runtime ISO string for day D-1 given weather date YYYY-MM-DD."""
-    from datetime import date
     d = date.fromisoformat(weather_date_str) - timedelta(days=1)
     return f"{d.isoformat()}T12:00:00Z"
 
@@ -64,9 +63,9 @@ def main():
                 missing += 1
                 continue
 
-            data["_meta"] = {"city_id": city_id, "weather_date": weather_date, "runtime": runtime}
+            out = {**data, "_meta": {"city_id": city_id, "weather_date": weather_date, "runtime": runtime}}
             with open(cache_path, "w") as f:
-                json.dump(data, f)
+                json.dump(out, f)
             fetched += 1
             time.sleep(0.5)  # be gentle with IEM's public API
 

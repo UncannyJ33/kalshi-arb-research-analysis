@@ -7,7 +7,6 @@ We pull the 12Z run from day D-1 (available ~8 AM ET, before market open at 10 A
 
 API docs: https://mesonet.agron.iastate.edu/api/1/mos.json
 """
-import time
 import logging
 import requests
 
