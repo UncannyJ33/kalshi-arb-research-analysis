@@ -11,7 +11,7 @@ import requests
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from cities import CITIES, get_series_tickers
+from cities import get_series_tickers
 
 logging.basicConfig(level=logging.INFO, format="%(message)s")
 logger = logging.getLogger(__name__)
