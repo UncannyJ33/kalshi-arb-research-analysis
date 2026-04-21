@@ -216,9 +216,10 @@ def build_rows() -> list[dict]:
     fallback_pct = 100 * sigma_sources["fallback"] / max(total, 1)
     logger.info(f"Built {total} rows. Sigma fallback rate: {fallback_pct:.1f}%")
     if fallback_pct > 30:
-        logger.warning(
-            f"SIGMA FALLBACK RATE {fallback_pct:.1f}% EXCEEDS 30% THRESHOLD — "
-            "flag this as a methodology caveat in findings.md"
+        logger.info(
+            f"Sigma fallback rate is {fallback_pct:.1f}% — GFS-MOS data does not include "
+            "a spread field, so all rows use DEFAULT_SIGMA=2.5°F. "
+            "Document as methodology caveat in findings.md."
         )
     return rows
 

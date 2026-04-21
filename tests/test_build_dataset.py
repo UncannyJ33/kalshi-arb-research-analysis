@@ -1,6 +1,5 @@
 import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'scripts'))
-import pandas as pd
 import pytest
 from build_dataset import (
     extract_open_price,
@@ -13,6 +12,14 @@ def test_extract_open_price_returns_open_field():
     candle_data = {
         "ticker": "KXHIGHNY-26APR17-T72",
         "candle": {"open": 0.04, "high": 0.05, "low": 0.03, "close": 0.045, "volume": 100}
+    }
+    assert extract_open_price(candle_data) == pytest.approx(0.04)
+
+def test_extract_open_price_real_api_format():
+    # Actual Kalshi candlestick API format: price nested under candle["price"]["open_dollars"]
+    candle_data = {
+        "ticker": "KXHIGHTDC-26MAR14-B57.5",
+        "candle": {"price": {"open_dollars": "0.0400", "close_dollars": "0.0500"}}
     }
     assert extract_open_price(candle_data) == pytest.approx(0.04)
 

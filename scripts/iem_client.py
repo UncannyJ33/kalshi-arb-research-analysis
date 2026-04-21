@@ -42,6 +42,12 @@ def extract_daily_forecast(mos_data: dict, weather_date_str: str) -> dict | None
     Extract the high/low temperature forecast for weather_date_str (YYYY-MM-DD)
     from a GFS-MOS response.
 
+    NOTE: The live IEM API returns a pandas orient='table' format with keys
+    {"schema", "data", "_meta"} where entries use "ftime_utc" not "valid".
+    This function expects the legacy {"forecasts": [{"valid": ..., "tmp": ...}]}
+    format and will return None for cached files on disk.
+    Use build_dataset.extract_daily_forecast_cached() for cached files.
+
     GFS-MOS provides forecasts at 6-hour intervals. Daily high = max(N18, N00, N06, N12)
     across the weather date's valid times (00Z through 18Z of weather_date).
     Returns {"t_high": float, "t_low": float, "sigma": float | None} or None.
