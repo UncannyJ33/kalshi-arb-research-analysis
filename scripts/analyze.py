@@ -133,6 +133,8 @@ def main():
             f"5pp threshold. The Gaussian-MOS model is not well-calibrated. "
             f"Tail analysis results are not trustworthy."
         )
+        # Soft-stop: continue to produce all outputs so findings.md has full context,
+        # but the final recommendation gates on calibration_passed.
 
     # --- Sigma fallback rate ---
     sigma_fallback_rate = (df["sigma_source"] == "fallback").mean()
