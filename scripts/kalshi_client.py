@@ -40,6 +40,7 @@ class KalshiClient:
         """
         Fetch all markets for a series. Paginates automatically.
         Returns a flat list of market objects.
+        status: use "settled" for completed markets ("finalized" is rejected by the Kalshi API).
         """
         markets = []
         cursor = None

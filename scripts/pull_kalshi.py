@@ -11,7 +11,6 @@ Run: python scripts/pull_kalshi.py
 import sys
 import json
 import logging
-import time
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -75,6 +74,7 @@ def pull_candle(client: KalshiClient, market: dict, series_ticker: str) -> dict 
 
     close_ts = market.get("close_time", "")
     if not close_ts:
+        logger.warning(f"  {ticker}: missing close_time, skipping")
         return None
 
     weather_dt = weather_date_from_close_time(close_ts)
