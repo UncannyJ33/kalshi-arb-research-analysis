@@ -26,7 +26,10 @@ class KalshiClient:
         resp = self.session.get(url, params=params)
         self._last_request = time.time()
         resp.raise_for_status()
-        return resp.json()
+        try:
+            return resp.json()
+        except requests.exceptions.JSONDecodeError as exc:
+            raise ValueError(f"Non-JSON response from {url}: {resp.text[:200]}") from exc
 
     def get_series(self, series_ticker: str) -> dict:
         """Fetch series metadata. Works without auth (public endpoint)."""
@@ -44,9 +47,9 @@ class KalshiClient:
             params = {"series_ticker": series_ticker, "status": status, "limit": 1000}
             if cursor:
                 params["cursor"] = cursor
-            if min_ts:
+            if min_ts is not None:
                 params["min_close_ts"] = min_ts
-            if max_ts:
+            if max_ts is not None:
                 params["max_close_ts"] = max_ts
             data = self._get("/markets", params)
             batch = data.get("markets", [])
