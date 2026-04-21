@@ -35,7 +35,7 @@ class KalshiClient:
         """Fetch series metadata. Works without auth (public endpoint)."""
         return self._get(f"/series/{series_ticker}")
 
-    def get_markets(self, series_ticker: str, status: str = "finalized",
+    def get_markets(self, series_ticker: str, status: str = "settled",
                     min_ts: int | None = None, max_ts: int | None = None) -> list[dict]:
         """
         Fetch all markets for a series. Paginates automatically.
@@ -59,7 +59,7 @@ class KalshiClient:
                 break
         return markets
 
-    def get_candlesticks(self, ticker: str, start_ts: int, end_ts: int,
+    def get_candlesticks(self, series_ticker: str, ticker: str, start_ts: int, end_ts: int,
                          period_interval: int = 60) -> list[dict]:
         """
         Fetch OHLCV candlesticks for a specific market ticker.
@@ -70,5 +70,5 @@ class KalshiClient:
             "end_ts": end_ts,
             "period_interval": period_interval,
         }
-        data = self._get(f"/markets/{ticker}/candlesticks", params)
+        data = self._get(f"/series/{series_ticker}/markets/{ticker}/candlesticks", params)
         return data.get("candlesticks", [])
