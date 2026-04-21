@@ -31,7 +31,6 @@ def test_bucket_probability_tail():
 
 def test_bucket_probability_sums_to_one():
     # integrating over all 1-degree buckets from 20 to 130 should be ~1.0
-    from functools import reduce
     total = sum(
         bucket_probability(72.5, 2.5, float(t), float(t + 1))
         for t in range(20, 130)
@@ -51,6 +50,7 @@ def test_ev_negative_when_fairly_priced():
 def test_is_tail_5pct():
     assert is_tail(0.05) is True
     assert is_tail(0.04) is True
+    assert is_tail(0.95) is True
     assert is_tail(0.96) is True
     assert is_tail(0.06) is False
     assert is_tail(0.94) is False

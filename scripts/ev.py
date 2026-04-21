@@ -1,3 +1,4 @@
+"""Core math for Kalshi weather market EV analysis. Pure functions only — no I/O."""
 from scipy.stats import norm
 
 
@@ -20,6 +21,10 @@ def bucket_probability(forecast: float, sigma: float, bucket_low: float, bucket_
     sigma comes from the MOS spread field when available; falls back to 2.5°F
     (published NWS 24h max temp MAE for major US cities).
     """
+    if sigma <= 0:
+        raise ValueError(f"sigma must be positive, got {sigma}")
+    if bucket_low >= bucket_high:
+        raise ValueError(f"bucket_low must be < bucket_high, got {bucket_low} >= {bucket_high}")
     return norm.cdf((bucket_high - forecast) / sigma) - norm.cdf((bucket_low - forecast) / sigma)
 
 
