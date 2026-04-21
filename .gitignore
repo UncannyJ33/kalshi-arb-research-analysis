@@ -10,3 +10,8 @@ reports/figures/
 *.egg-info/
 dist/
 build/
+.claude/
+.env
+.ipynb_checkpoints/
+**/.DS_Store
+*.log
