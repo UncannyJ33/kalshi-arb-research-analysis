@@ -1,7 +1,7 @@
 # tests/test_cities.py
 import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'scripts'))
-from cities import CITIES, get_series_tickers
+from cities import CITIES, get_series_tickers, get_city_for_series
 
 def test_all_cities_have_required_keys():
     required = {"name", "mos_station", "lat", "lon", "series"}
@@ -26,3 +26,11 @@ def test_get_series_tickers_returns_all():
     assert "KXHIGHNY" in tickers
     assert "KXLOWTCHI" in tickers
     assert len(tickers) == 19  # 9 cities × 2 + Chicago × 1
+
+def test_get_city_for_series_happy_path():
+    result = get_city_for_series("KXHIGHTDAL")
+    assert result == ("dallas", {"ticker": "KXHIGHTDAL", "market_type": "high"})
+
+def test_get_city_for_series_miss():
+    result = get_city_for_series("NONEXISTENT")
+    assert result is None

@@ -113,5 +113,5 @@ def get_city_for_series(ticker: str) -> tuple[str, dict] | None:
     for city_id, cfg in CITIES.items():
         for s in cfg["series"]:
             if s["ticker"] == ticker:
-                return city_id, s
+                return city_id, dict(s)
     return None
